@@ -26,7 +26,7 @@ def progress():
 
 
 def buttonPressed():
-    global question, quest_label, anwser_entry, prizeLabel
+    global question, quest_label, anwser_entry, prizeLabel, root
     sizeList = list(ammoutDict.keys())
     ammoutDict[sizeList[question]] = anwser_entry.get()
     question += 1
@@ -34,12 +34,14 @@ def buttonPressed():
     if question >= 3:
         totaalPrijs = 0
         for ammoutValue, prizeValue in zip(ammoutDict.values(), prizeDict.values()):
-            totaalPrijs += (ammoutValue * prizeValue)
-        quest_label.config("Uw totaal: " + totaalPrijs)
+            totaalPrijs += (float(ammoutValue) * prizeValue)
+        quest_label.config(text="Uw totaal: " + str(totaalPrijs))
+        showinfo(title="Melding!!!", message="Klik hier om het programma te beëindigen")
+        root.destroy()
     else:
         textMessage = ("Hoeveel " + str(sizeList[question]) + " pizza's wilt u hebben?")
         quest_label.config(text=textMessage)
-        prizeLabel.config("Prijs (" + str(sizeList[question]) + "): " + str(prizeDict[sizeList[question]]))
+        prizeLabel.config(text="Prijs (" + str(sizeList[question]) + "): " + str(prizeDict[sizeList[question]]))
 
 
 # the progressbar itself
@@ -64,7 +66,7 @@ anwser_button = tk.Button(root, text="Bevestig", width=7, command=buttonPressed)
 anwser_button.grid(column=1, row=3, columnspan=2)
 
 # show prize label
-prizeLabel = tk.Label(root, font=("Helvetica", 12), bg="light gray", width=13, text=("Prijs (small): " + str(prizeDict["small"])))
+prizeLabel = tk.Label(root, font=("Helvetica", 12), bg="light gray", width=20, text=("Prijs (small): " + str(prizeDict["small"])))
 prizeLabel.grid(column=0, row=4, columnspan=2)
 
 # run program
